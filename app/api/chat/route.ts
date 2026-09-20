@@ -1,17 +1,22 @@
-// exemplo simples (sem streaming)
-import type { NextApiRequest, NextApiResponse } from 'next';
-import OpenAI from 'openai';
+import OpenAI from "openai";
+import { NextResponse } from "next/server";
 
-const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { message } = req.body;
+export async function POST(req: Request) {
+  const { message } = await req.json();
 
   const completion = await client.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [{ role: 'user', content: message }],
+    model: "gpt-4o-mini",
+    messages: [
+      { role: "system", content: "Você é uma IA consultora profissional, moderna e objetiva." },
+      { role: "user", content: message }
+    ]
   });
 
-  res.status(200).json({ reply: completion.choices[0].message.content });
+  return NextResponse.json({
+    reply: completion.choices[0].message.content
+  });
 }
-
