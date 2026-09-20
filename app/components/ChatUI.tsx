@@ -21,7 +21,6 @@ export default function ChatUI() {
         body: JSON.stringify({ message: input })
       });
 
-      // trata status não OK
       if (!res.ok) {
         const text = await res.text().catch(() => "");
         setReply(`Erro do servidor: ${res.status} ${text || ""}`);
@@ -29,7 +28,6 @@ export default function ChatUI() {
         return;
       }
 
-      // tenta parsear JSON com fallback
       let data;
       try {
         data = await res.json();
