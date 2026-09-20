@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
+import MotionDiv from "./MotionDiv";
 
 export default function ChatUI() {
   const [input, setInput] = useState("");
@@ -36,8 +36,7 @@ export default function ChatUI() {
     <div className="w-full max-w-xl mx-auto mt-20 text-center">
 
       {/* Núcleo animado */}
-      <motion.div
-        {...({} as HTMLMotionProps<"div">)}
+      <MotionDiv
         className="mx-auto mb-6 w-24 h-24 rounded-full bg-blue-600 blur-xl"
         animate={{ opacity: loading ? 1 : 0.4, scale: loading ? 1.1 : 1 }}
         transition={{ duration: 0.4 }}
@@ -60,14 +59,13 @@ export default function ChatUI() {
 
       {/* Resposta */}
       {reply && (
-        <motion.div
-          {...({} as HTMLMotionProps<"div">)}
+        <MotionDiv
           className="mt-6 bg-gray-900 p-4 rounded border border-gray-700"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
         >
           {reply}
-        </motion.div>
+        </MotionDiv>
       )}
     </div>
   );
